@@ -7,13 +7,21 @@ import menuConfig from './../../config/menuConfig'
 const Option = Select.Option;
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
-export default class Basic extends React.Component {
+class Basic extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             role: 'teacher',
+            visible: false,
+            master: {
+              name: '孙伟星',
+              school: '',
+              phone: '',
+            }
         }
         this.basic = this.basic.bind(this);
+        this.onEdit = this.handleEdit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount(){
@@ -155,88 +163,142 @@ export default class Basic extends React.Component {
         })
     }
 
+    handleEdit() {
+        this.setState({
+            visible: true,
+        })
+    }
+
+    handleSubmit() {
+        this.setState({
+            visible: false,
+        })
+    }
+
     basic() {
-        const {role} = this.state;
+        const {role, master} = this.state;
         if (role === 'student') {
             return (
               <div>
                <div>基本信息：</div>
-                <h1>`角色：${'学生'}`</h1>
-                <h1>`姓名：${'孙伟星'}`</h1>
-                <h1>`学校：${'东北农业大学'}`</h1>
-                <h1>`专业：${'软件工程'}`</h1>
-                <h1>`性别：${'男'}`</h1>
-                <h1>`指导教师：${'孙伟星'}`</h1>
-                <h1>`项目名称：${'东北农业大学'}`</h1>
-                <h1>`成绩：${'软件工程'}`</h1>
-                <h1>`审核状态：${'男'}`</h1>
+                <h1>角色：{'学生'}</h1>
+                <h1>姓名：{master.name}</h1>
+                <h1>学校：{'东北农业大学'}</h1>
+                <h1>专业：{'软件工程'}</h1>
+                <h1>性别：{'男'}</h1>
+                <h1>指导教师：{'孙伟星'}</h1>
+                <h1>项目名称：{'东北农业大学'}</h1>
+                <h1>成绩：{'软件工程'}</h1>
+                <h1>审核状态：{'男'}</h1>
               </div>
             )
         } else {
             return (
                 <div>
                  <div>基本信息：</div>
-                  <h1>`角色：${'教师'}`</h1>
-                  <h1>`姓名：${'孙伟星'}`</h1>
-                  <h1>`学校：${'东北农业大学'}`</h1>
-                  <h1>`专业：${'软件工程'}`</h1>
-                  <h1>`性别：${'男'}`</h1>
-                  <h1>`指导学生：${'孙伟星'}`</h1>
-                  <h1>`项目名称：${'东北农业大学'}`</h1>
-                  <h1>`成绩：${'软件工程'}`</h1>
-                  <h1>`审核状态：${'男'}`</h1>
+                  <h1>角色：{'教师'}</h1>
+                  <h1>姓名：{master.name}</h1>
+                  <h1>学校：{'东北农业大学'}</h1>
+                  <h1>专业：{'软件工程'}</h1>
+                  <h1>性别：{'男'}</h1>
+                  <h1>指导学生：{'孙伟星'}</h1>
+                  <h1>项目名称：{'东北农业大学'}</h1>
+                  <h1>成绩：{'软件工程'}</h1>
+                  <h1>审核状态：{'男'}</h1>
                 </div>
               )
         }
 
     }
-    render() {
-        return (
-            this.basic()
-        );
-    }
-}
 
-class RoleAuthForm extends React.Component {
-
-    onCheck = (checkedKeys) => {
-        this.props.patchMenuInfo(checkedKeys)
-    }
-    filterOption = (inputValue, option) => {
-        return option.title.indexOf(inputValue) > -1;
-    }
-    handleChange = (targetKeys)=>{
-        this.props.patchUserInfo(targetKeys);
-    }
-    
-    render() {
+    basicEdit() {
+        const {visible} = this.state;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 5 },
             wrapperCol: { span: 19 }
         }
-        const detail_info = this.props.detailInfo;
-        const menuInfo = this.props.menuInfo;
         return (
-            <Form layout="horizontal">
+            <Modal 
+              visible={visible}
+              onOk={this.handleSubmit}
+            >
+              <Form layout="horizontal">
                 <FormItem label="角色名称" {...formItemLayout}>
-                    <Input disabled placeholder={detail_info.role_name} />
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入角色名称" />
+                        )   
+                    }
                 </FormItem>
-                <FormItem label="选择用户" {...formItemLayout}>
-                    <Transfer
-                        listStyle={{width:200,height:400}}
-                        dataSource={this.props.mockData}
-                        titles={['待选用户', '已选用户']}
-                        showSearch
-                        searchPlaceholder='输入用户名'
-                        filterOption={this.filterOption}
-                        targetKeys={this.props.targetKeys}
-                        onChange={this.handleChange}
-                        render={item => item.title}
-                    />
+                <FormItem label="状态" {...formItemLayout}>
+                    {
+                        getFieldDecorator('state')(
+                            <Select>
+                                <Option value={1}>开启</Option>
+                                <Option value={0}>关闭</Option>
+                            </Select>
+                        )  
+                    }
                 </FormItem>
             </Form>
+            </Modal>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                {this.basic()}
+                <Button onClick={this.onEdit}>修改</Button>
+                {this.basicEdit()}
+            </div>
         );
     }
 }
-RoleAuthForm = Form.create({})(RoleAuthForm);
+
+// class RoleAuthForm extends React.Component {
+
+//     onCheck = (checkedKeys) => {
+//         this.props.patchMenuInfo(checkedKeys)
+//     }
+//     filterOption = (inputValue, option) => {
+//         return option.title.indexOf(inputValue) > -1;
+//     }
+//     handleChange = (targetKeys)=>{
+//         this.props.patchUserInfo(targetKeys);
+//     }
+    
+//     render() {
+//         const { getFieldDecorator } = this.props.form;
+//         const formItemLayout = {
+//             labelCol: { span: 5 },
+//             wrapperCol: { span: 19 }
+//         }
+//         const detail_info = this.props.detailInfo;
+//         const menuInfo = this.props.menuInfo;
+//         return (
+//             <Form layout="horizontal">
+//                 <FormItem label="角色名称" {...formItemLayout}>
+//                     <Input disabled placeholder={detail_info.role_name} />
+//                 </FormItem>
+//                 <FormItem label="选择用户" {...formItemLayout}>
+//                     <Transfer
+//                         listStyle={{width:200,height:400}}
+//                         dataSource={this.props.mockData}
+//                         titles={['待选用户', '已选用户']}
+//                         showSearch
+//                         searchPlaceholder='输入用户名'
+//                         filterOption={this.filterOption}
+//                         targetKeys={this.props.targetKeys}
+//                         onChange={this.handleChange}
+//                         render={item => item.title}
+//                     />
+//                 </FormItem>
+//             </Form>
+//         );
+//     }
+// }
+// RoleAuthForm = Form.create({})(RoleAuthForm);
+
+export default Form.create()(Basic);
