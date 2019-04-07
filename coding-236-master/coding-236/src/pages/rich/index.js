@@ -60,6 +60,7 @@ export default class RichText extends React.Component {
                 >
                     {draftjs(this.state.contentState)}
                 </Modal>
+                <Button>提交</Button>
             </div>
         );
     }

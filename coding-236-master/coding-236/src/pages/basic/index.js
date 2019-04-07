@@ -1,15 +1,21 @@
 import React from 'react'
 import { Card, Button, Form, Select, Modal, Input, Tree, Transfer } from 'antd'
-import ETable from '../../components/ETable'
-import Utils from '../../utils/utils'
-import axios from '../../axios'
-import menuConfig from '../../config/menuConfig'
+import ETable from './../../components/ETable'
+import Utils from './../../utils/utils'
+import axios from './../../axios'
+import menuConfig from './../../config/menuConfig'
 const Option = Select.Option;
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
 export default class Basic extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            role: 'teacher',
+        }
+        this.basic = this.basic.bind(this);
+    }
 
-    state = { }
     componentWillMount(){
         axios.requestList(this,'/role/list',{});
     }
@@ -148,194 +154,50 @@ export default class Basic extends React.Component {
             }
         })
     }
+
+    basic() {
+        const {role} = this.state;
+        if (role === 'student') {
+            return (
+              <div>
+               <div>基本信息：</div>
+                <h1>`角色：${'学生'}`</h1>
+                <h1>`姓名：${'孙伟星'}`</h1>
+                <h1>`学校：${'东北农业大学'}`</h1>
+                <h1>`专业：${'软件工程'}`</h1>
+                <h1>`性别：${'男'}`</h1>
+                <h1>`指导教师：${'孙伟星'}`</h1>
+                <h1>`项目名称：${'东北农业大学'}`</h1>
+                <h1>`成绩：${'软件工程'}`</h1>
+                <h1>`审核状态：${'男'}`</h1>
+              </div>
+            )
+        } else {
+            return (
+                <div>
+                 <div>基本信息：</div>
+                  <h1>`角色：${'教师'}`</h1>
+                  <h1>`姓名：${'孙伟星'}`</h1>
+                  <h1>`学校：${'东北农业大学'}`</h1>
+                  <h1>`专业：${'软件工程'}`</h1>
+                  <h1>`性别：${'男'}`</h1>
+                  <h1>`指导学生：${'孙伟星'}`</h1>
+                  <h1>`项目名称：${'东北农业大学'}`</h1>
+                  <h1>`成绩：${'软件工程'}`</h1>
+                  <h1>`审核状态：${'男'}`</h1>
+                </div>
+              )
+        }
+
+    }
     render() {
-        const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: { span: 5 },
-            wrapperCol: { span: 19 }
-        }
         return (
-            <div>
-                <Card>
-                    <Button type="primary" onClick={this.handleRole}>创建角色</Button>
-                    <Button type="primary" style={{marginLeft:10,marginRight:10}} onClick={this.handlePermission}>设置权限</Button>
-                    <Button type="primary" onClick={this.hanldeUserAuth}>用户授权</Button>
-                </Card>
-                <Form layout="horizontal">
-                <FormItem label="角色名称" {...formItemLayout}>
-                    {
-                        getFieldDecorator('role_name')(
-                            <Input type="text" placeholder="请输入角色名称" />
-                        )   
-                    }
-                </FormItem>
-                <FormItem label="状态" {...formItemLayout}>
-                    {
-                        getFieldDecorator('state')(
-                            <Select>
-                                <Option value={1}>开启</Option>
-                                <Option value={0}>关闭</Option>
-                            </Select>
-                        )  
-                    }
-                </FormItem>
-            </Form>
-                <Modal
-                    title="创建角色"
-                    visible={this.state.isRoleVisible}
-                    onOk={this.handleRoleSubmit}
-                    onCancel={()=>{
-                        this.roleForm.props.form.resetFields();
-                        this.setState({
-                            isRoleVisible:false
-                        })
-                    }}
-                >
-                    <RoleForm wrappedComponentRef={(inst)=>this.roleForm=inst}></RoleForm>
-                </Modal>
-                <Modal
-                    title="设置权限"
-                    visible={this.state.isPermVisible}
-                    width={600}
-                    onOk={this.handlePermEditSubmit}
-                    onCancel={()=>{
-                        this.setState({
-                            isPermVisible:false
-                        })
-                    }}
-                >
-                    <PermEditForm 
-                        wrappedComponentRef={(inst) => this.permForm = inst}
-                        detailInfo={this.state.detailInfo} 
-                        menuInfo={this.state.menuInfo}
-                        patchMenuInfo={(checkedKeys)=>{
-                            this.setState({
-                                menuInfo: checkedKeys
-                            })
-                        }}
-                    />
-                </Modal>
-                <Modal
-                    title="用户授权"
-                    visible={this.state.isUserVisible}
-                    width={800}
-                    onOk={this.handleUserSubmit}
-                    onCancel={() => {
-                        this.setState({
-                            isUserVisible: false
-                        })
-                    }}
-                >
-                    <BasicForm
-                        wrappedComponentRef={(inst) => this.userAuthForm = inst}
-                        detailInfo={this.state.detailInfo}
-                        targetKeys={this.state.targetKeys}
-                        mockData={this.state.mockData}
-                        patchUserInfo={(targetKeys)=>{
-                            this.setState({
-                                targetKeys
-                            })
-                        }}
-                    />
-                </Modal>
-            </div>
+            this.basic()
         );
     }
 }
-class RoleForm extends React.Component {
 
-    render() {
-        const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: { span: 5 },
-            wrapperCol: { span: 19 }
-        }
-        return (
-            <Form layout="horizontal">
-                <FormItem label="角色名称" {...formItemLayout}>
-                    {
-                        getFieldDecorator('role_name')(
-                            <Input type="text" placeholder="请输入角色名称" />
-                        )   
-                    }
-                </FormItem>
-                <FormItem label="状态" {...formItemLayout}>
-                    {
-                        getFieldDecorator('state')(
-                            <Select>
-                                <Option value={1}>开启</Option>
-                                <Option value={0}>关闭</Option>
-                            </Select>
-                        )  
-                    }
-                </FormItem>
-            </Form>
-        );
-    }
-}
-RoleForm = Form.create({})(RoleForm);
-
-class PermEditForm extends React.Component{
-
-    onCheck = (checkedKeys)=>{
-        this.props.patchMenuInfo(checkedKeys)
-    }
-
-    renderTreeNodes = (data)=>{
-        return data.map((item)=>{
-            if(item.children){
-                return <TreeNode title={item.title} key={item.key}>
-                    {this.renderTreeNodes(item.children)}
-                </TreeNode>
-            }else{
-                return <TreeNode {...item}/>
-            }
-        })
-    }
-    render(){
-        const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: { span: 5 },
-            wrapperCol: { span: 19 }
-        }
-        const detail_info = this.props.detailInfo;
-        const menuInfo = this.props.menuInfo;
-        return (
-            <Form layout="horizontal">
-                <FormItem label="角色名称" {...formItemLayout}>
-                    <Input disabled placeholder={detail_info.role_name}/>
-                </FormItem>
-                <FormItem label="状态" {...formItemLayout}>
-                    {
-                        getFieldDecorator('status',{
-                            initialValue:'1'
-                        })(
-                            <Select>
-                                <Option value="1">启用</Option>
-                                <Option value="0">停用</Option>
-                            </Select>
-                        )
-                    }
-                </FormItem>
-                <Tree
-                    checkable
-                    defaultExpandAll
-                    onCheck={(checkedKeys)=>{
-                        this.onCheck(checkedKeys)
-                    }}
-                    checkedKeys={menuInfo}
-                >
-                    <TreeNode title="平台权限" key="platform_all">
-                        {this.renderTreeNodes(menuConfig)}
-                    </TreeNode>
-                </Tree>
-            </Form>
-        );
-    }
-}
-PermEditForm = Form.create({})(PermEditForm);
-
-class BasicForm extends React.Component {
+class RoleAuthForm extends React.Component {
 
     onCheck = (checkedKeys) => {
         this.props.patchMenuInfo(checkedKeys)
@@ -377,4 +239,4 @@ class BasicForm extends React.Component {
         );
     }
 }
-BasicForm = Form.create({})(BasicForm);
+RoleAuthForm = Form.create({})(RoleAuthForm);
