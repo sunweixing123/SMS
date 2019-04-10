@@ -4,6 +4,7 @@ import ETable from './../../components/ETable'
 import Utils from './../../utils/utils'
 import axios from './../../axios'
 import menuConfig from './../../config/menuConfig'
+import './index.less';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
@@ -180,7 +181,7 @@ class Basic extends React.Component {
         if (role === 'student') {
             return (
               <div>
-               <div>基本信息：</div>
+               <div className="title">基本信息：</div>
                 <h1>角色：{'学生'}</h1>
                 <h1>姓名：{master.name}</h1>
                 <h1>学校：{'东北农业大学'}</h1>
@@ -194,7 +195,7 @@ class Basic extends React.Component {
             )
         } else {
             return (
-                <div>
+                <div className="title">
                  <div>基本信息：</div>
                   <h1>角色：{'教师'}</h1>
                   <h1>姓名：{master.name}</h1>
@@ -216,12 +217,14 @@ class Basic extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 5 },
-            wrapperCol: { span: 19 }
+            wrapperCol: { span: 15 }
         }
         return (
             <Modal 
               visible={visible}
               onOk={this.handleSubmit}
+              onCancel={this.handleSubmit}
+              width={800}
             >
               <Form layout="horizontal">
                 <FormItem label="角色名称" {...formItemLayout}>
@@ -231,7 +234,7 @@ class Basic extends React.Component {
                         )   
                     }
                 </FormItem>
-                <FormItem label="状态" {...formItemLayout}>
+                {/* <FormItem label="状态" {...formItemLayout}>
                     {
                         getFieldDecorator('state')(
                             <Select>
@@ -239,6 +242,55 @@ class Basic extends React.Component {
                                 <Option value={0}>关闭</Option>
                             </Select>
                         )  
+                    }
+                </FormItem> */}
+                <FormItem label="姓名" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入姓名" />
+                        )   
+                    }
+                </FormItem>
+                <FormItem label="学校" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入学校" />
+                        )   
+                    }
+                </FormItem>
+                <FormItem label="专业" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入专业" />
+                        )   
+                    }
+                </FormItem>
+                <FormItem label="性别" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入性别" />
+                        )   
+                    }
+                </FormItem>
+                <FormItem label="项目名称" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入项目名称" />
+                        )   
+                    }
+                </FormItem>
+                <FormItem label="审核状态" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入审核状态" />
+                        )   
+                    }
+                </FormItem>
+                <FormItem label="成绩" {...formItemLayout}>
+                    {
+                        getFieldDecorator('role_name')(
+                            <Input type="text" placeholder="请输入成绩" />
+                        )   
                     }
                 </FormItem>
             </Form>
@@ -248,7 +300,7 @@ class Basic extends React.Component {
 
     render() {
         return (
-            <div>
+            <div class="Basic">
                 {this.basic()}
                 <Button onClick={this.onEdit}>修改</Button>
                 {this.basicEdit()}
