@@ -300,7 +300,7 @@ class Basic extends React.Component {
 
     render() {
         return (
-            <div class="Basic">
+            <div className="Basic">
                 {this.basic()}
                 <Button onClick={this.onEdit}>修改</Button>
                 {this.basicEdit()}

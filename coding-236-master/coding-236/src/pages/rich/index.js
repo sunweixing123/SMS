@@ -5,9 +5,19 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftjs from 'draftjs-to-html';
 export default class RichText extends React.Component {
 
-    state = {
-        showRichText:false,
-        editorState:''
+    // state = {
+    //     showRichText:false,
+    //     // editorState:'这是我的项目申报'
+    //     editorState: '', //富文本的内容，传给后端
+    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+          showRichText:false,
+          // editorState:'这是我的项目申报'
+          editorState: '', //富文本的内容，传给后端
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleClearContent = ()=>{
@@ -26,13 +36,22 @@ export default class RichText extends React.Component {
         this.setState({
             contentState
         });
+        console.log(contentState);
+
     }
 
     onEditorStateChange = (editorState)=>{
         this.setState({
             editorState,
         });
+        console.log(editorState);
     }
+
+    handleSubmit() {
+        console.log('提交成功');
+    }
+
+
     render() {
         const { editorState } = this.state;
         return (
@@ -60,7 +79,7 @@ export default class RichText extends React.Component {
                 >
                     {draftjs(this.state.contentState)}
                 </Modal>
-                <Button>提交</Button>
+                <Button onClick={this.handleSubmit}>提交</Button>
             </div>
         );
     }
