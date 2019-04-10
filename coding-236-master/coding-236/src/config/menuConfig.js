@@ -141,7 +141,7 @@ const menuList = [
     },
     {
         title: '中期考核',
-        key: '/charts',
+        key: '/intrev',
     },
     {
         title: '项目结题',
