@@ -30,6 +30,7 @@ import RichText from './pages/rich'
 import Permission from './pages/permission'
 import Basic from './pages/basic'
 import IntRev from './pages/intRev'
+import EndSub from './pages/endSub'
 export default class IRouter extends React.Component{
 
     render(){
@@ -71,6 +72,7 @@ export default class IRouter extends React.Component{
                                     <Route path="/permission" component={Permission} />
                                     <Route path="/basic" component={Basic} />
                                     <Route path="/intrev" component={IntRev} />
+                                    <Route path="/endsub" component={EndSub} />
                                     <Redirect to="/home" />
                                     <Route component={NoMatch} />
                                 </Switch>

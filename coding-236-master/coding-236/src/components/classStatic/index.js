@@ -15,8 +15,8 @@ class ClassStatic extends Component {
         const {name, type, date} = this.state;
         return (
             <div className="classStatic">
-              <h3>课题基本信息</h3>
-              <div>课程名称：<span>{name}</span></div>
+              <h2>课题基本信息</h2>
+              <div className="title">课程名称：<span>{name}</span></div>
               {/* <span>可选专业:<span>{type}</span></span>      
               <span>可选专业:<span>{type}</span></span>    
               <span>可选专业:<span>{type}</span></span>
@@ -25,19 +25,21 @@ class ClassStatic extends Component {
               <span>可选专业:<span>{type}</span></span> */}
               <table>
                   <tr>
-                      <td><span>可选专业:<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;</span>  </td>
-                      <td><span>可选专业:<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;</span>  </td>
-                      <td><span>可选专业:<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;</span>  </td>
+                      <td><span>可选专业:&nbsp;<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;&nbsp;</span>  </td>
+                      <td><span>课题申报时间:&nbsp;<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;&nbsp;</span>  </td>
+                      <td><span>题目类型:&nbsp;<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;&nbsp;</span>  </td>
+                      <td><span>题目来源:&nbsp;<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;&nbsp;</span>  </td>
                   </tr>
                   <tr>
-                      <td><span>可选专业:<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;</span>  </td>
-                      <td><span>可选专业:<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;</span>  </td>
-                      <td><span>可选专业:<span>{type}</span></span>  </td>
+                      <td><span>选择模式:&nbsp;<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;&nbsp;</span>  </td>
+                      <td><span>课题所属专业:&nbsp;<span>{type}</span></span> <span className="tab">&nbsp; &nbsp;&nbsp;</span>  </td>
+                      <td><span>指导教师:&nbsp;<span>{type}</span></span>  </td>
+                      <td><span>教师职称:&nbsp;<span>{type}</span></span>  </td>
                   </tr>
                   <tr>
-                      <td><span>可选专业:<span>{type}</span></span>  </td>
-                      <td><span>可选专业:<span>{type}</span></span>  </td>
-                      <td><span>可选专业:<span>{type}</span></span>  </td>
+                      <td><span>导师邮箱:<span>{type}</span></span>  </td>
+                      <td><span>学生姓名:<span>{type}</span></span>  </td>
+                      <td><span>学生院系专业:<span>{type}</span></span>  </td>
                   </tr>
               </table>
             </div>

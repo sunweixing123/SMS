@@ -5,6 +5,8 @@ import Utils from './../../utils/utils'
 import axios from './../../axios'
 import menuConfig from './../../config/menuConfig'
 import './index.less';
+import '../../components/classStatic'
+import ClassStatic from '../../components/classStatic';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
@@ -301,6 +303,7 @@ class Basic extends React.Component {
     render() {
         return (
             <div className="Basic">
+                <ClassStatic />
                 {this.basic()}
                 <Button onClick={this.onEdit}>修改</Button>
                 {this.basicEdit()}

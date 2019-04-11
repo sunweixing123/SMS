@@ -145,7 +145,7 @@ const menuList = [
     },
     {
         title: '项目结题',
-        key: '/charts',
+        key: '/endsub',
     },
     {
         title: '权限设置',
