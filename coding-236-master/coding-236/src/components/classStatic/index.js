@@ -41,7 +41,6 @@ class ClassStatic extends Component {
                         <td><span>教师职称:&nbsp;<span>{type}</span></span>  </td>
                     </tr>
                   </tbody>
-                  
 
                   <tbody>
                     <tr>
