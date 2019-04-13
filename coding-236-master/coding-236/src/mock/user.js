@@ -5,7 +5,7 @@ const DB = require('./mysqlDB');
 
 const app = new Koa();
 const router = new Router();
-router.get('/', async (ctx, next) => {
+router.get('/stuData', async (ctx, next) => {
 //   ctx.body="hello koa";
 //   const connection = mysql.createConnection({
 //       host: 'localhost',
@@ -23,6 +23,8 @@ router.get('/', async (ctx, next) => {
 //   connection.end();
     const result = await DB.query('select * from t_user'); //查询数据库
     console.log(result);
+    ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    ctx.set('Access-Control-Allow-Credentials', 'true');
     ctx.body = result;
   
 })

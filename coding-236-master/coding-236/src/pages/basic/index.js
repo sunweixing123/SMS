@@ -7,6 +7,10 @@ import menuConfig from './../../config/menuConfig'
 import './index.less';
 import '../../components/classStatic'
 import ClassStatic from '../../components/classStatic';
+// import Api from '../../fetch/index';
+
+import 'whatwg-fetch';
+import 'es6-promise';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
@@ -20,15 +24,30 @@ class Basic extends React.Component {
               name: '孙伟星',
               school: '',
               phone: '',
-            }
+            },
+            data: {},
         }
         this.basic = this.basic.bind(this);
         this.onEdit = this.handleEdit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getData = this.getData.bind(this);
     }
 
     componentWillMount(){
         axios.requestList(this,'/role/list',{});
+    }
+
+    componentDidMount() {
+        // Api.GET('/stuData');
+        // data.then(res => {
+        //     return res.json()
+        //   }).then(json => {
+        //     console.log(json)
+        //   });
+        // data.then(res => {
+        //     console.log(res);
+        // })
+        this.getData('/stuData');
     }
     // 打开创建角色弹框
     handleRole=()=>{
@@ -178,6 +197,31 @@ class Basic extends React.Component {
         })
     }
 
+    getData(url) { //获取数据没能封装
+        url = `http://localhost:3001${url}`;
+        var result = fetch(url, {
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json, text/plain, */*'
+          }
+        });
+        // cbs = function(res){
+        //   console.log(res);
+        // };
+        result.then(res => {
+          console.log(res);
+          return res.json()
+        }).then(json => {
+          console.log(json);
+          this.setState({
+              data: json,
+          })
+          // cbs(json);
+          return json;
+        })
+        return result;
+      }
+
     basic() {
         const {role, master} = this.state;
         if (role === 'student') {
@@ -301,6 +345,8 @@ class Basic extends React.Component {
     }
 
     render() {
+        const { data } = this.state;
+        console.log(data);
         return (
             <div className="Basic">
                 <ClassStatic />
