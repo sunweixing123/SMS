@@ -4,7 +4,7 @@ import 'es6-promise';
 
 
 const Api = {
-    GET(url) {
+    GET(url, cbs) {
         url = `http://localhost:3001${url}`;
         var result = fetch(url, {
             credentials: 'include',
@@ -20,6 +20,7 @@ const Api = {
             return res.json();
         }).then(json => {
             console.log(json);
+            cbs(json);
             // cbs(json);
             return json;
         })

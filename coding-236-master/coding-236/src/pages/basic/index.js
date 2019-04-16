@@ -7,7 +7,7 @@ import menuConfig from './../../config/menuConfig'
 import './index.less';
 import '../../components/classStatic'
 import ClassStatic from '../../components/classStatic';
-// import Api from '../../fetch/index';
+import Api from '../../fetch/index';
 
 import 'whatwg-fetch';
 import 'es6-promise';
@@ -47,7 +47,11 @@ class Basic extends React.Component {
         // data.then(res => {
         //     console.log(res);
         // })
-        this.getData('/stuData');
+        this.getData('/stuMessage');
+        const cbs = function(data) { //回调函数实现完成
+            console.log(data);
+        }
+        Api.GET('/stuData', cbs);
     }
     // 打开创建角色弹框
     handleRole=()=>{
