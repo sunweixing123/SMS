@@ -25,12 +25,13 @@ class Basic extends React.Component {
               school: '',
               phone: '',
             },
-            data: {},
+            userData: {},
         }
         this.basic = this.basic.bind(this);
         this.onEdit = this.handleEdit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getData = this.getData.bind(this);
+        this.getuserData = this.getuserData.bind(this);
     }
 
     componentWillMount(){
@@ -48,10 +49,15 @@ class Basic extends React.Component {
         //     console.log(res);
         // })
         this.getData('/stuMessage');
+        const _this = this;
         const cbs = function(data) { //回调函数实现完成
             console.log(data);
+            _this.setState({
+                userData: data[0],
+            });
         }
-        Api.GET('/stuData', cbs);
+        Api.GET('/activeUser', cbs);
+        this.getuserData();
     }
     // 打开创建角色弹框
     handleRole=()=>{
@@ -226,14 +232,22 @@ class Basic extends React.Component {
         return result;
       }
 
+      getuserData() { //获取用户详细信息
+          const cbs = function(data) {
+              console.log(data);
+          }
+          Api.GET('/userData', cbs);
+      }
+
     basic() {
-        const {role, master} = this.state;
+        const {role, master, userData} = this.state;
+        console.log(userData);
         if (role === 'student') {
             return (
               <div>
                <div className="title">基本信息：</div>
-                <h1>角色：{'学生'}</h1>
-                <h1>姓名：{master.name}</h1>
+                <h1>角色：{userData.role || '学生'}</h1>
+                <h1>姓名：{userData.name || ''}</h1>
                 <h1>学校：{'东北农业大学'}</h1>
                 <h1>专业：{'软件工程'}</h1>
                 <h1>性别：{'男'}</h1>
@@ -248,7 +262,7 @@ class Basic extends React.Component {
                 <div className="title">
                  <div>基本信息：</div>
                   <h1>角色：{'教师'}</h1>
-                  <h1>姓名：{master.name}</h1>
+                  <h1>姓名：{userData.user_name}</h1>
                   <h1>学校：{'东北农业大学'}</h1>
                   <h1>专业：{'软件工程'}</h1>
                   <h1>性别：{'男'}</h1>

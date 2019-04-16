@@ -14,6 +14,30 @@ router.get('/stuData', async (ctx, next) => {
   
 })
 
+router.get('/activeUser', async (ctx, next) => {
+  const result = await DB.query('select * from t_user where active_user = 1'); //查询当前用户信息
+  console.log(result);
+  ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  ctx.set('Access-Control-Allow-Credentials', 'true');
+  ctx.body = result;
+
+})
+
+//select * from t_user,t_message where t_user.message_is=t_message.message_id and t_user.active_user = 1
+
+//SELECT empName,deptName FROM employee INNER JOIN dept ON employee.deptId=dept.id;
+
+//select * from t_user, t_message where t_user.message_id = t_message.message_id
+
+router.get('/userData', async (ctx, next) => {
+  const result = await DB.query('select * from t_message, t_user where t_user.message_is=t_message.message_id'); //查询当前用户详细信息
+  console.log(result);
+  ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  ctx.set('Access-Control-Allow-Credentials', 'true');
+  ctx.body = result;
+
+})
+
 
 router.get('/stuMessage', async (ctx, next) => {
   const result = await DB.query('select * from t_message'); //查询基本信息
