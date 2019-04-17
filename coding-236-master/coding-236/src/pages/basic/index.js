@@ -56,7 +56,7 @@ class Basic extends React.Component {
                 userData: data[0],
             });
         }
-        Api.GET('/activeUser', cbs);
+        Api.GET('/userData', cbs);
         this.getuserData();
     }
     // 打开创建角色弹框
@@ -242,7 +242,7 @@ class Basic extends React.Component {
     basic() {
         const {role, master, userData} = this.state;
         console.log(userData);
-        if (role === 'student') {
+        if (userData.role === 'student') {
             return (
               <div>
                <div className="title">基本信息：</div>
@@ -262,9 +262,9 @@ class Basic extends React.Component {
                 <div className="title">
                  <div>基本信息：</div>
                   <h1>角色：{'教师'}</h1>
-                  <h1>姓名：{userData.user_name}</h1>
+                  <h1>姓名：{userData.teacher || ''}</h1>
                   <h1>学校：{'东北农业大学'}</h1>
-                  <h1>专业：{'软件工程'}</h1>
+                  <h1>专业：{userData.zhuanye || '软件工程'}</h1>
                   <h1>性别：{'男'}</h1>
                   <h1>指导学生：{'孙伟星'}</h1>
                   <h1>项目名称：{'东北农业大学'}</h1>

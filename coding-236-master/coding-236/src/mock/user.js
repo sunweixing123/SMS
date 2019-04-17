@@ -30,7 +30,7 @@ router.get('/activeUser', async (ctx, next) => {
 //select * from t_user, t_message where t_user.message_id = t_message.message_id
 
 router.get('/userData', async (ctx, next) => {
-  const result = await DB.query('select * from t_message, t_user where t_user.message_is=t_message.message_id'); //查询当前用户详细信息
+  const result = await DB.query('select * from t_message'); //查询当前用户详细信息
   console.log(result);
   ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000');
   ctx.set('Access-Control-Allow-Credentials', 'true');
